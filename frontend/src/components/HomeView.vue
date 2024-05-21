@@ -3,16 +3,34 @@
 import AppBar from "@/components/AppBar.vue";
 import VideoGrid from "@/components/VideoGrid.vue";
 import Banner from "@/components/Banner.vue";
+import {reactive, ref} from "vue";
+import {getHttp} from "@/scripts/http.js";
+import {store} from "@/scripts/store.js";
 
-const videos = [
-  {id: 1, title: '视频1', thumbnail: 'https://www.dmoe.cc/random.php', author: '作者1'},
-  {id: 2, title: '视频2', thumbnail: 'https://www.dmoe.cc/random.php', author: '作者2'},
-  {id: 3, title: '视频3', thumbnail: 'https://www.dmoe.cc/random.php', author: '作者3'},
-  {id: 4, title: '视频4', thumbnail: 'https://www.dmoe.cc/random.php', author: '作者4'},
-  {id: 5, title: '视频5', thumbnail: 'https://www.dmoe.cc/random.php', author: '作者5'},
-  {id: 6, title: '视频6', thumbnail: 'https://www.dmoe.cc/random.php', author: '作者6'},
-  {id: 7, title: '视频7', thumbnail: 'https://www.dmoe.cc/random.php', author: '作者7'},
-]
+let video_count = ref(0)
+
+getHttp().get('/videos/count').then(response => {
+  video_count.value = response.data.count
+}).catch(error => {
+  console.error(error)
+})
+
+function get_videos(page) {
+  let res = null
+  getHttp().get('/videos', {
+    params: {
+      offset: (page - 1) * store.videos_per_count
+    }
+  }).then(response => {
+    res = response
+  }).catch(error => {
+    console.log(error)
+  })
+
+  return res.data
+}
+
+let videos = reactive(get_videos(1))
 
 </script>
 
@@ -24,7 +42,7 @@ const videos = [
     <v-main class="" style="min-height: 300px;">
       <Banner/>
 
-      <video-grid :videos="videos"/>
+      <video-grid :videos="videos" :video_count="video_count" :get_videos="get_videos"/>
     </v-main>
   </v-layout>
 </template>

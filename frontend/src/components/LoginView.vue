@@ -2,8 +2,41 @@
 
 import {ref} from "vue";
 import fix from "@/assets/fix.png";
+import {getHttp} from "@/scripts/http.js";
+import {useRouter} from "vue-router";
+import {store} from "@/scripts/store.js";
 
 let visible = ref(false)
+let loading = ref(false)
+
+let email = ref(null)
+let password = ref(null)
+
+async function submit() {
+  if (!email.value || !password.value) {
+    return
+  }
+
+  loading.value = true
+
+  const response = await getHttp().get('/login', {
+    params: {
+      email: email.value,
+      password: password.value
+    }
+  })
+
+  loading.value = false
+
+  if (response.status === 201) {
+    alert('User logged in successfully!')
+    store.user = response.data
+    await useRouter().push({name: 'home'})
+  } else {
+    console.log(response.status)
+    alert('Failed to login user, please try again.')
+  }
+}
 </script>
 
 <template>
@@ -23,6 +56,7 @@ let visible = ref(false)
       <div class="text-subtitle-1 text-medium-emphasis">Account</div>
 
       <v-text-field
+          v-model="email"
           density="compact"
           placeholder="Email address"
           prepend-inner-icon="mdi-email-outline"
@@ -42,6 +76,7 @@ let visible = ref(false)
       </div>
 
       <v-text-field
+          v-model="password"
           :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
           :type="visible ? 'text' : 'password'"
           density="compact"
@@ -68,6 +103,8 @@ let visible = ref(false)
           size="large"
           variant="tonal"
           block
+          :loading="loading"
+          @click="submit"
       >
         Log In
       </v-btn>

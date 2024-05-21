@@ -2,6 +2,8 @@
 
 import {ref} from "vue";
 import fix from "@/assets/fix.png";
+import {useRouter} from "vue-router";
+import {getHttp} from "@/scripts/http.js";
 
 let username = ref(null)
 let email = ref(null)
@@ -18,7 +20,7 @@ const rules = {
 let text = ref('')
 let loading = ref(false)
 
-function submit() {
+async function submit() {
   if (!username.value) {
     text.value = 'Username is required'
     return
@@ -31,6 +33,25 @@ function submit() {
   } else if (password.value.length < 8) {
     text.value = 'Password must be at least 8 characters'
     return
+  }
+
+  loading.value = true
+
+  const response = await getHttp().post('/user', {
+    username: username.value,
+    email: email.value,
+    password: password.value,
+    profile: profile.value
+  })
+
+  loading.value = false
+
+  if (response.status === 201) {
+    alert('User registered successfully!')
+    await useRouter().push({name: 'login'})
+  } else {
+    console.log(response.status)
+    alert('Failed to register user, please try again.')
   }
 }
 </script>

@@ -5,10 +5,18 @@ const props = defineProps({
   videos: {
     type: Array,
     required: true
+  },
+  video_count: {
+    type: Number,
+    required: true
+  },
+  get_videos: {
+    type: Function,
+    required: true
   }
 });
 
-const videos_per_page = 8;
+const videos_per_page = 12;
 let page = ref(1)
 
 </script>
@@ -51,10 +59,12 @@ let page = ref(1)
       <v-col cols="12" sm="8">
         <v-pagination
             v-model="page"
-            :length="videos.length / videos_per_page + 1"
+            :length="(videos.length + videos_per_page - 1) / videos_per_page"
             rounded="circle"
             next-icon="mdi-menu-right"
             prev-icon="mdi-menu-left"
+            @prev="get_videos(page)"
+            @next="get_videos(page)"
         ></v-pagination>
       </v-col>
     </v-row>

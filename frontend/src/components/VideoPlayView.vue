@@ -1,38 +1,82 @@
 <script setup>
-
 import {VideoPlayer} from "@videojs-player/vue";
 import 'video.js/dist/video-js.css'
 import AppBar from "@/components/AppBar.vue";
 import {ref, reactive} from "vue";
-import {useRoute} from "vue-router";
 import icon from '@/assets/icon.png'
+import {getHttp} from "@/scripts/http.js";
+import {store} from "@/scripts/store.js";
 
-const id = useRoute().params.id
+const props = defineProps({
+  id: {
+    type: Number,
+    required: true
+  }
+});
 
-const video = {
-  id: 1, title: '视频1', thumbnail: 'https://www.dmoe.cc/random.php', author: '作者1',
-  src: 'http://mirrors.standaloneinstaller.com/video-sample/Panasonic_HDC_TM_700_P_50i.mp4',
-  description: 'This is a video',
-}
+let video = reactive(null)
 
-let isLike = ref(false)
-
-let comments = [
-  {
-    avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
-    username: 'John Doe',
-    text: 'This is a great post!',
-    isLiked: true,
-  },
-  {
-    avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
-    username: 'Jane Smith',
-    text: 'I totally agree!',
-    isLiked: false,
-  },
-];
+getHttp().get(`/video/${props.id}`).then(response => {
+  video.value = response.data
+}).catch(error => {
+  console.error(error)
+})
 
 let page = ref(1)
+
+let comments = reactive(null)
+
+let comments_count = ref(0)
+
+getHttp().get(`/comments/video/${props.id}/count`).then(response => {
+  comments_count.value = response.data.count
+}).catch(error => {
+  console.error(error)
+})
+
+let isLike = ref(false)
+let likeRecord = reactive(null)
+
+getHttp().get('/like', {
+  params: {
+    video_id: props.id,
+    author_id: store.user.id
+  }
+}).then(response => {
+  if (response.status === 200) {
+    isLike.value = true
+    likeRecord = response.data
+  }
+}).catch(error => {
+  console.error(error)
+})
+
+function favorite() {
+  if (!isLike) {
+    getHttp().post('/like', {
+      video_id: props.id,
+      author_id: store.user.id
+    }).then(response => {
+      console.log(response.data)
+    }).catch(error => {
+      console.error(error)
+    })
+  } else {
+    getHttp().delete('/like', {
+      params: {
+        id: likeRecord.id,
+        video_id: props.id,
+        author_id: store.user.id
+      }
+    }).then(response => {
+      console.log(response.data)
+    }).catch(error => {
+      console.error(error)
+    })
+  }
+
+  isLike.value = !isLike.value
+}
 
 const playerOptions = reactive({
   controls: true,
@@ -44,13 +88,8 @@ const playerOptions = reactive({
   preload: 'auto',
   language: 'en-US',
   aspectRatio: '16:9',
-  liveui: true,
-  // fluid: true,
   src: video.src,
-  poster: video.thumbnail,
-  // width: document.documentElement.clientWidth,
-  // height: document.documentElement.clientHeight * 0.8,
-  // notSupportedMessage: '此视频暂无法播放，请稍后再试',
+  poster: video.cover,
   controlBar: {
     timeDivider: true,
     durationDisplay: true,
@@ -58,6 +97,20 @@ const playerOptions = reactive({
     fullscreenToggle: true
   }
 })
+
+function get_comments() {
+  getHttp().get(`/comments/video/${props.id}`, {
+    params: {
+      offset: (page.value - 1) * store.comments_per_count
+    }
+  }).then(response => {
+    comments.value = response.data
+  }).catch(error => {
+    console.error(error)
+  })
+}
+
+get_comments()
 
 </script>
 
@@ -91,7 +144,7 @@ const playerOptions = reactive({
             location="top end"
             size="large"
             absolute
-            @click="isLike=!isLike"
+            @click="favorite"
         ></v-fab>
 
         <v-card class="my-2">
@@ -141,10 +194,12 @@ const playerOptions = reactive({
       <div>
         <v-pagination
             v-model="page"
-            :length="4"
+            :length="(comments_count + store.comments_per_count - 1) / store.comments_per_count"
             rounded="circle"
             next-icon="mdi-menu-right"
             prev-icon="mdi-menu-left"
+            @prev="get_comments"
+            @next="get_comments"
         ></v-pagination>
       </div>
     </v-main>
