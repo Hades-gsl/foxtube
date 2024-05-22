@@ -19,11 +19,9 @@ async function submit() {
 
   loading.value = true
 
-  const response = await getHttp().get('/login', {
-    params: {
-      email: email.value,
-      password: password.value
-    }
+  const response = await getHttp().post('/user/login', {
+    email: email.value,
+    password: password.value
   })
 
   loading.value = false

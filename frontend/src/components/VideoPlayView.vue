@@ -28,7 +28,11 @@ let comments = reactive(null)
 
 let comments_count = ref(0)
 
-getHttp().get(`/comments/video/${props.id}/count`).then(response => {
+getHttp().get(`/comments/count`, {
+  params: {
+    video_id: props.id
+  }
+}).then(response => {
   comments_count.value = response.data.count
 }).catch(error => {
   console.error(error)
@@ -99,9 +103,10 @@ const playerOptions = reactive({
 })
 
 function get_comments() {
-  getHttp().get(`/comments/video/${props.id}`, {
+  getHttp().get(`/comments`, {
     params: {
-      offset: (page.value - 1) * store.comments_per_count
+      offset: (page.value - 1) * store.comments_per_count,
+      video_id: props.id
     }
   }).then(response => {
     comments.value = response.data

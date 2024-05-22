@@ -51,7 +51,7 @@ router.beforeEach((to, from) => {
     }
 
     if (store.token.value !== undefined && store.user.value === null) {
-        getHttp().get('/').then(response => {
+        getHttp().get('/user').then(response => {
             store.user.value = response.data;
         }).catch(error => {
             console.log(error);

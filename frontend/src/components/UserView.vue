@@ -16,10 +16,11 @@ const props = defineProps({
 
 function get_videos(page) {
   let res = null
-  getHttp().get(`/videos/user/${props.id}`,
+  getHttp().get(`/videos`,
       {
         params: {
-          offset: (page - 1) * store.videos_per_count
+          offset: (page - 1) * store.videos_per_count,
+          author_id: props.id
         }
       }
   ).then(response => {
