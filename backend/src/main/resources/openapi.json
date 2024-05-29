@@ -1,0 +1,1038 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "foxtube",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "video"
+    },
+    {
+      "name": "user"
+    },
+    {
+      "name": "like"
+    },
+    {
+      "name": "comment"
+    }
+  ],
+  "paths": {
+    "/video/{id}": {
+      "get": {
+        "summary": "获取视频",
+        "x-apifox-folder": "video",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getVideo",
+        "tags": [
+          "video"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/video"
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-160426526-run",
+        "security": []
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "用户注册",
+        "x-apifox-folder": "user",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "register",
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "profile": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-160436774-run",
+        "security": []
+      },
+      "get": {
+        "summary": "获取用户信息",
+        "x-apifox-folder": "user",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getUser",
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "没有权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176026401-run",
+        "security": []
+      }
+    },
+    "/user/login": {
+      "post": {
+        "summary": "用户登录",
+        "x-apifox-folder": "user",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "login",
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "没有权限",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-160443928-run",
+        "security": []
+      }
+    },
+    "/video": {
+      "post": {
+        "summary": "发布视频",
+        "x-apifox-folder": "video",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "addVideo",
+        "tags": [
+          "video"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "video": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "cover": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "author_id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "title",
+                  "video",
+                  "cover",
+                  "description",
+                  "author_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-160448134-run",
+        "security": []
+      }
+    },
+    "/like": {
+      "post": {
+        "summary": "增加点赞",
+        "x-apifox-folder": "like",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "addLike",
+        "tags": [
+          "like"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "video_id": {
+                    "type": "integer"
+                  },
+                  "author_id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "video_id",
+                  "author_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-160451953-run",
+        "security": []
+      },
+      "get": {
+        "summary": "获取点赞信息",
+        "x-apifox-folder": "like",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getLike",
+        "tags": [
+          "like"
+        ],
+        "parameters": [
+          {
+            "name": "video_id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "author_id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/like"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "记录不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176172151-run",
+        "security": []
+      },
+      "delete": {
+        "summary": "取消点赞",
+        "x-apifox-folder": "like",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "deleteLike",
+        "tags": [
+          "like"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "video_id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "author_id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176175593-run",
+        "security": []
+      }
+    },
+    "/videos": {
+      "get": {
+        "summary": "获取视频列表",
+        "x-apifox-folder": "video",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "按照时间排序获取视频，每次获取offset后12个视频。",
+        "operationId": "getVideos",
+        "tags": [
+          "video"
+        ],
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "author_id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/video"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176027546-run",
+        "security": []
+      }
+    },
+    "/videos/count": {
+      "get": {
+        "summary": "获取视频数量",
+        "x-apifox-folder": "video",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getVideosCount",
+        "tags": [
+          "video"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/count"
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176027860-run",
+        "security": []
+      }
+    },
+    "/comments": {
+      "get": {
+        "summary": "获取评论列表",
+        "x-apifox-folder": "comment",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getComments",
+        "tags": [
+          "comment"
+        ],
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "video_id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/comment"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176029531-run",
+        "security": []
+      }
+    },
+    "/comments/count": {
+      "get": {
+        "summary": "获取评论数量",
+        "x-apifox-folder": "comment",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getCommentsCount",
+        "tags": [
+          "comment"
+        ],
+        "parameters": [
+          {
+            "name": "video_id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/count"
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176030112-run",
+        "security": []
+      }
+    },
+    "/comment": {
+      "post": {
+        "summary": "发布评论",
+        "x-apifox-folder": "comment",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "addComment",
+        "tags": [
+          "comment"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string"
+                  },
+                  "video_id": {
+                    "type": "integer"
+                  },
+                  "author_id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "content",
+                  "video_id",
+                  "author_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176710066-run",
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "count": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer"
+          }
+        },
+        "x-apifox-orders": [
+          "count"
+        ],
+        "required": [
+          "count"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "like": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "ID"
+          },
+          "video_id": {
+            "type": "integer",
+            "title": "视频ID"
+          },
+          "user_id": {
+            "type": "integer",
+            "title": "用户ID"
+          }
+        },
+        "x-apifox-orders": [
+          "id",
+          "video_id",
+          "user_id"
+        ],
+        "required": [
+          "id",
+          "video_id",
+          "user_id"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "comment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "ID"
+          },
+          "content": {
+            "type": "string",
+            "title": "内容"
+          },
+          "created_at": {
+            "type": "integer",
+            "title": "发布时间"
+          },
+          "video_id": {
+            "type": "integer",
+            "title": "视频ID"
+          },
+          "author_id": {
+            "type": "integer",
+            "title": "作者ID"
+          }
+        },
+        "x-apifox-orders": [
+          "id",
+          "content",
+          "created_at",
+          "video_id",
+          "author_id"
+        ],
+        "required": [
+          "id",
+          "content",
+          "created_at",
+          "video_id",
+          "author_id"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "user": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "ID"
+          },
+          "username": {
+            "type": "string",
+            "title": "用户名"
+          },
+          "email": {
+            "type": "string",
+            "title": "邮箱"
+          },
+          "password": {
+            "type": "string",
+            "title": "密码"
+          },
+          "avatar": {
+            "type": "string",
+            "title": "头像url"
+          },
+          "profile": {
+            "type": "string",
+            "title": "简介"
+          },
+          "video_count": {
+            "type": "integer",
+            "title": "视频数量"
+          }
+        },
+        "x-apifox-orders": [
+          "id",
+          "username",
+          "email",
+          "password",
+          "avatar",
+          "profile",
+          "video_count"
+        ],
+        "required": [
+          "id",
+          "username",
+          "email",
+          "password",
+          "avatar",
+          "profile",
+          "video_count"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "video": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "ID"
+          },
+          "title": {
+            "type": "string",
+            "title": "标题"
+          },
+          "cover": {
+            "type": "string",
+            "title": "封面"
+          },
+          "url": {
+            "type": "string",
+            "title": "视频url"
+          },
+          "description": {
+            "type": "string",
+            "title": "视频描述"
+          },
+          "published_at": {
+            "type": "integer",
+            "title": "发布日期"
+          },
+          "likes": {
+            "type": "integer",
+            "title": "点赞量"
+          },
+          "author_id": {
+            "type": "string",
+            "title": "作者ID"
+          }
+        },
+        "x-apifox-orders": [
+          "id",
+          "title",
+          "cover",
+          "url",
+          "description",
+          "published_at",
+          "likes",
+          "author_id"
+        ],
+        "required": [
+          "id",
+          "title",
+          "cover",
+          "url",
+          "description",
+          "published_at",
+          "author_id",
+          "likes"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      }
+    },
+    "securitySchemes": {}
+  },
+  "servers": []
+}
