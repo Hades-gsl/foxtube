@@ -346,6 +346,64 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-160448134-run",
         "security": []
+      },
+      "get": {
+        "summary": "获取视频列表",
+        "x-apifox-folder": "video",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "按照时间排序获取视频，每次获取offset后12个视频。",
+        "operationId": "getVideos",
+        "tags": [
+          "video"
+        ],
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "author_id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/video"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176027546-run",
+        "security": []
       }
     },
     "/like": {
@@ -556,67 +614,7 @@
         "security": []
       }
     },
-    "/videos": {
-      "get": {
-        "summary": "获取视频列表",
-        "x-apifox-folder": "video",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "按照时间排序获取视频，每次获取offset后12个视频。",
-        "operationId": "getVideos",
-        "tags": [
-          "video"
-        ],
-        "parameters": [
-          {
-            "name": "offset",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "author_id",
-            "in": "query",
-            "description": "",
-            "required": false,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": false,
-            "example": "",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/video"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176027546-run",
-        "security": []
-      }
-    },
-    "/videos/count": {
+    "/video/count": {
       "get": {
         "summary": "获取视频数量",
         "x-apifox-folder": "video",
@@ -628,6 +626,15 @@
           "video"
         ],
         "parameters": [
+          {
+            "name": "author_id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
           {
             "name": "Authorization",
             "in": "header",
@@ -655,7 +662,7 @@
         "security": []
       }
     },
-    "/comments": {
+    "/comment": {
       "get": {
         "summary": "获取评论列表",
         "x-apifox-folder": "comment",
@@ -713,57 +720,7 @@
         },
         "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176029531-run",
         "security": []
-      }
-    },
-    "/comments/count": {
-      "get": {
-        "summary": "获取评论数量",
-        "x-apifox-folder": "comment",
-        "x-apifox-status": "developing",
-        "deprecated": false,
-        "description": "",
-        "operationId": "getCommentsCount",
-        "tags": [
-          "comment"
-        ],
-        "parameters": [
-          {
-            "name": "video_id",
-            "in": "query",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "",
-            "required": false,
-            "example": "",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/count"
-                }
-              }
-            }
-          }
-        },
-        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176030112-run",
-        "security": []
-      }
-    },
-    "/comment": {
+      },
       "post": {
         "summary": "发布评论",
         "x-apifox-folder": "comment",
@@ -827,6 +784,54 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176710066-run",
+        "security": []
+      }
+    },
+    "/comment/count": {
+      "get": {
+        "summary": "获取评论数量",
+        "x-apifox-folder": "comment",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getCommentsCount",
+        "tags": [
+          "comment"
+        ],
+        "parameters": [
+          {
+            "name": "video_id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/count"
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176030112-run",
         "security": []
       }
     }
@@ -1004,7 +1009,7 @@
             "title": "点赞量"
           },
           "author_id": {
-            "type": "string",
+            "type": "integer",
             "title": "作者ID"
           }
         },

@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: foxtube
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/foxtube
+    username: root
+    password: 123456
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.hades.foxtube.model
+
+jwt:
+  secret: $8%^w^k^F4&Gk%m2R1EKS5CsMr!dLxDT6g&B6ox1^$S%y$@JmGeO31643@*$jP1J
+  expiration-millisecond: 604800000
+
+azure:
+  blob:
+    accountName: foxtube
+    containerName: storage
+    sasToken: sp=racw&st=2024-05-31T06:36:24Z&se=2024-05-31T14:36:24Z&spr=https&sv=2022-11-02&sr=c&sig=MTZ%2BbFbJuzVQJtPd50F5OeKv5GYtbLNx8t8tVFRWkyc%3D

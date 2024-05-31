@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.2.4'
     id 'io.spring.dependency-management' version '1.1.4'
     id "org.openapi.generator" version "7.6.0"
+    id "io.freefair.lombok" version "8.6"
 }
 
 group = 'com.hades'
@@ -34,6 +35,24 @@ dependencies {
     implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.1.0-M2'
     // https://mvnrepository.com/artifact/org.openapitools/jackson-databind-nullable
     implementation group: 'org.openapitools', name: 'jackson-databind-nullable', version: '0.2.6'
+    // https://mvnrepository.com/artifact/org.mapstruct/mapstruct
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    // https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
+    implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '3.0.3'
+    // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
+    implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.4.0'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.3.0'
+    // https://mvnrepository.com/artifact/com.auth0/java-jwt
+    implementation group: 'com.auth0', name: 'java-jwt', version: '4.4.0'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '3.3.0'
+
+    implementation platform('com.azure:azure-sdk-bom:1.2.24')
+    implementation 'com.azure:azure-storage-blob'
+    implementation 'com.azure:azure-storage-common'
+    implementation 'com.azure:azure-identity'
 }
 
 tasks.named('test') {
@@ -49,8 +68,8 @@ openApiGenerate {
     modelPackage.set('com.hades.foxtube.dto')
     modelNameSuffix.set('Dto')
     configOptions.set([
-            'interfaceOnly'       : 'true',
-            'useSpringBoot3'      : 'true',
+            'interfaceOnly' : 'true',
+            'useSpringBoot3': 'true',
     ])
 }
 

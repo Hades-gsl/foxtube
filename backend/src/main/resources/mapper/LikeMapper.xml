@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hades.foxtube.dao.LikeDao">
+    <insert id="insertLike" parameterType="Like" keyProperty="id">
+        INSERT INTO likes (video_id, user_id)
+        VALUES (#{videoId}, #{userId})
+    </insert>
+
+    <delete id="deleteLike" parameterType="Like">
+        DELETE
+        FROM likes
+        WHERE id = #{id}
+          AND user_id = #{userId}
+          AND video_id = #{videoId}
+    </delete>
+
+    <select id="getLike" parameterType="Like" resultType="Like">
+        SELECT *
+        FROM likes
+        WHERE user_id = #{userId}
+          AND video_id = #{videoId}
+    </select>
+</mapper>
