@@ -71,6 +71,9 @@ openApiGenerate {
             'interfaceOnly' : 'true',
             'useSpringBoot3': 'true',
     ])
+    typeMappings.set([
+            'integer': 'Long',
+    ])
 }
 
 compileJava.dependsOn tasks.openApiGenerate

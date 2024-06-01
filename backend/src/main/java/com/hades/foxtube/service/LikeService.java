@@ -8,7 +8,7 @@ import com.hades.foxtube.model.Like;
 public interface LikeService {
   void insertLike(Like like);
 
-  void deleteLike(Like like);
+  void deleteLike(Long id);
 
-  Like getLike(int userId, int videoId);
+  Like getLike(Long userId, Long videoId);
 }

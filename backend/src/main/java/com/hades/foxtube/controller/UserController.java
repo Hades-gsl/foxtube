@@ -1,17 +1,18 @@
 package com.hades.foxtube.controller;
 
 import com.hades.foxtube.api.UserApi;
+import com.hades.foxtube.dto.LoginResponseDto;
 import com.hades.foxtube.dto.UserDto;
 import com.hades.foxtube.mapper.UserMapper;
 import com.hades.foxtube.model.User;
+import com.hades.foxtube.security.jwt.JwtUtils;
 import com.hades.foxtube.security.service.UserDetailsImpl;
 import com.hades.foxtube.service.UserService;
+import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.net.URI;
 
 /**
  * @Author: Hades @Date: 2024/5/29 @Description:
@@ -20,11 +21,13 @@ import java.net.URI;
 public class UserController implements UserApi {
   private UserService userService;
   private UserMapper userMapper;
+  private JwtUtils jwtUtils;
 
   @Autowired
-  public UserController(UserService userService, UserMapper userMapper) {
+  public UserController(UserService userService, UserMapper userMapper, JwtUtils jwtUtils) {
     this.userService = userService;
     this.userMapper = userMapper;
+    this.jwtUtils = jwtUtils;
   }
 
   @Override
@@ -37,14 +40,26 @@ public class UserController implements UserApi {
   }
 
   @Override
-  public ResponseEntity<UserDto> login(String email, String password, String authorization) {
+  public ResponseEntity<LoginResponseDto> login(
+      String email, String password, String authorization) {
     User user = userService.login(email, password);
 
     if (user == null) {
       return ResponseEntity.badRequest().build();
     }
 
-    return ResponseEntity.ok(userMapper.toUserDto(user));
+    LoginResponseDto loginResponseDto =
+        new LoginResponseDto()
+            .id(user.getId())
+            .username(user.getUsername())
+            .email(user.getEmail())
+            .profile(user.getProfile())
+            .avatar(user.getAvatar())
+            .videoCount(user.getVideoCount())
+            .password(user.getPassword())
+            .token(jwtUtils.generateToken(user.getUsername()));
+
+    return ResponseEntity.ok(loginResponseDto);
   }
 
   @Override

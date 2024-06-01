@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Video {
-  private Integer id;
+  private Long id;
 
   private String title;
 
@@ -23,21 +23,21 @@ public class Video {
 
   private String description;
 
-  private Integer publishedAt;
+  private Long publishedAt;
 
-  private Integer likes;
+  private Long likes;
 
-  private Integer authorId;
+  private Long authorId;
 
   public static Video create(
-      String title, String cover, String url, String description, Integer authorId) {
+      String title, String cover, String url, String description, Long authorId) {
     return Video.builder()
         .title(title)
         .cover(cover)
         .url(url)
         .description(description)
-        .publishedAt((int) System.currentTimeMillis())
-        .likes(0)
+        .publishedAt(System.currentTimeMillis())
+        .likes(0L)
         .authorId(authorId)
         .build();
   }

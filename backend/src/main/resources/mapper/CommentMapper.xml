@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hades.foxtube.dao.CommentDao">
+    <resultMap id="commentResultMap" type="Comment">
+        <result property="videoId" column="video_id"/>
+        <result property="authorId" column="author_id"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
     <insert id="insertComment" parameterType="Comment" keyProperty="id">
         INSERT INTO comments (video_id, author_id, content, created_at)
         VALUES (#{videoId}, #{authorId}, #{content}, #{createdAt})
     </insert>
 
-    <select id="getComments" resultType="Comment">
+    <select id="getComments" resultMap="commentResultMap">
         SELECT *
         FROM comments
         WHERE video_id = #{videoId}
@@ -14,7 +20,7 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <select id="getComment" resultType="Integer">
+    <select id="getCommentCount" resultType="Long">
         SELECT COUNT(*)
         FROM comments
         WHERE video_id = #{videoId}

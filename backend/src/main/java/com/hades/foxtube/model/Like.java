@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Like {
-  private Integer id;
+  private Long id;
 
-  private Integer videoId;
+  private Long videoId;
 
-  private Integer userId;
+  private Long userId;
 
-  public static Like create(Integer videoId, Integer userId) {
+  public static Like create(Long videoId, Long userId) {
     return Like.builder().videoId(videoId).userId(userId).build();
   }
 }

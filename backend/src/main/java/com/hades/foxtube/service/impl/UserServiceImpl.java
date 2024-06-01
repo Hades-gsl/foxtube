@@ -4,6 +4,7 @@ import com.hades.foxtube.dao.UserDao;
 import com.hades.foxtube.model.User;
 import com.hades.foxtube.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class UserServiceImpl implements UserService {
   private PasswordEncoder passwordEncoder;
 
   @Autowired
-  public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
+  public UserServiceImpl(UserDao userDao, @Lazy PasswordEncoder passwordEncoder) {
     this.userDao = userDao;
     this.passwordEncoder = passwordEncoder;
   }
@@ -28,17 +29,18 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void insertUser(User user) {
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
     userDao.insertUser(user);
   }
 
   @Override
-  public User getUser(Integer id) {
+  public User getUser(Long id) {
     return userDao.getUserById(id);
   }
 
   @Override
   public User login(String email, String password) {
-    User user = userDao.getUserByName(email);
+    User user = userDao.getUserByEmail(email);
     if (passwordEncoder.matches(password, user.getPassword())) {
       return user;
     }

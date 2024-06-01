@@ -1,11 +1,10 @@
 package com.hades.foxtube.model;
 
+import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.Instant;
 
 /**
  * @Author: Hades @Date: 2024/5/29 @Description:
@@ -15,20 +14,20 @@ import java.time.Instant;
 @NoArgsConstructor
 @Builder
 public class Comment {
-  private Integer id;
+  private Long id;
 
   private String content;
 
-  private Integer createdAt;
+  private Long createdAt;
 
-  private Integer videoId;
+  private Long videoId;
 
-  private Integer authorId;
+  private Long authorId;
 
-  public static Comment create(String content, Integer videoId, Integer authorId) {
+  public static Comment create(String content, Long videoId, Long authorId) {
     return Comment.builder()
         .content(content)
-        .createdAt((int) Instant.now().toEpochMilli())
+        .createdAt(Instant.now().toEpochMilli())
         .videoId(videoId)
         .authorId(authorId)
         .build();

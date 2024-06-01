@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class User {
-  private Integer id;
+  private Long id;
 
   private String username;
 
@@ -32,20 +32,20 @@ public class User {
 
   private String profile;
 
-  private Integer videoCount;
+  private Long videoCount;
 
   public static User create(String username, String email, String password, String profile) {
     return User.builder()
         .username(username)
         .email(email)
         .password(password)
-        .avatar(getAvatar())
+        .avatar(_getAvatar())
         .profile(profile)
-        .videoCount(0)
+        .videoCount(0L)
         .build();
   }
 
-  private static String getAvatar() {
+  private static String _getAvatar() {
     // response example:
     //    {
     //            "code": 200,

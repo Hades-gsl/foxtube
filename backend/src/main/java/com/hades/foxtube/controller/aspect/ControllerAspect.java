@@ -1,12 +1,11 @@
 package com.hades.foxtube.controller.aspect;
 
+import java.lang.reflect.Parameter;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Parameter;
 
 /**
  * @Author: Hades @Date: 2024/5/31 @Description:
@@ -21,28 +20,37 @@ public class ControllerAspect {
 
   @Before("controller()")
   public void beforeController(JoinPoint joinPoint) {
-    logger.info("Method: {} is called", joinPoint.getSignature().getName());
+    StringBuilder logMessage =
+        new StringBuilder("\nMethod: ")
+            .append(joinPoint.getSignature().getName())
+            .append(" is called\n");
 
     MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
     Parameter[] parameters = methodSignature.getMethod().getParameters();
     Object[] args = joinPoint.getArgs();
 
     for (int i = 0; i < parameters.length; i++) {
-      logger.info("Parameter name: {}, Value: {}", parameters[i].getName(), args[i]);
+      logMessage
+          .append("Parameter name: ")
+          .append(parameters[i].getName())
+          .append(", Value: ")
+          .append(args[i])
+          .append("\n");
     }
+
+    logger.info(logMessage.toString());
   }
 
   @AfterReturning(pointcut = "controller()", returning = "result")
   public void afterController(JoinPoint joinPoint, Object result) {
-    logger.info("Method: {} is finished", joinPoint.getSignature().getName());
-
-    logger.info("Result: {}", result);
+    logger.info(
+        "\nMethod: {} is finished.\nResult: {}", joinPoint.getSignature().getName(), result);
   }
 
   @AfterThrowing(pointcut = "controller()", throwing = "exception")
   public void afterThrowingController(JoinPoint joinPoint, Throwable exception) {
     logger.error(
-        "Method: {} throws exception: {}",
+        "\nMethod: {} throws exception: {}",
         joinPoint.getSignature().getName(),
         exception.getMessage());
   }

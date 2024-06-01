@@ -7,7 +7,6 @@ import com.hades.foxtube.mapper.CommentMapper;
 import com.hades.foxtube.model.Comment;
 import com.hades.foxtube.service.CommentService;
 import java.net.URI;
-import java.time.Instant;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +28,7 @@ public class CommentController implements CommentApi {
 
   @Override
   public ResponseEntity<Object> addComment(
-      String authorization, String content, Integer videoId, Integer authorId) {
+      String authorization, String content, Long videoId, Long authorId) {
     Comment comment = Comment.create(content, videoId, authorId);
     commentService.insertComment(comment);
     return ResponseEntity.created(URI.create("/comment/" + comment.getId())).build();
@@ -37,13 +36,13 @@ public class CommentController implements CommentApi {
 
   @Override
   public ResponseEntity<List<CommentDto>> getComments(
-      Integer offset, Integer videoId, String authorization) {
+      Long offset, Long videoId, String authorization) {
     return ResponseEntity.ok(
         commentMapper.toCommentDtoList(commentService.getComments(videoId, offset)));
   }
 
   @Override
-  public ResponseEntity<CountDto> getCommentsCount(Integer videoId, String authorization) {
+  public ResponseEntity<CountDto> getCommentsCount(Long videoId, String authorization) {
     return ResponseEntity.ok(new CountDto().count(commentService.getCommentCount(videoId)));
   }
 }

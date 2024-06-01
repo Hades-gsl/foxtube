@@ -10,7 +10,7 @@ public interface UserService {
 
   void insertUser(User user);
 
-  User getUser(Integer id);
+  User getUser(Long id);
 
   User login(String email, String password);
 }

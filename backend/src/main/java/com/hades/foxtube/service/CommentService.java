@@ -1,7 +1,6 @@
 package com.hades.foxtube.service;
 
 import com.hades.foxtube.model.Comment;
-
 import java.util.List;
 
 /**
@@ -10,7 +9,7 @@ import java.util.List;
 public interface CommentService {
   void insertComment(Comment comment);
 
-  List<Comment> getComments(Integer videoId, Integer offset);
+  List<Comment> getComments(Long videoId, Long offset);
 
-  Integer getCommentCount(Integer videoId);
+  Long getCommentCount(Long videoId);
 }

@@ -3,8 +3,6 @@ package com.hades.foxtube.dao;
 import com.hades.foxtube.model.Like;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
 /**
  * @Author: Hades @Date: 2024/5/29 @Description:
  */
@@ -12,7 +10,7 @@ import java.util.List;
 public interface LikeDao {
   void insertLike(Like like);
 
-  void deleteLike(Like like);
+  void deleteLike(Long id);
 
-  Like getLike(int userId, int videoId);
+  Like getLike(Long userId, Long videoId);
 }

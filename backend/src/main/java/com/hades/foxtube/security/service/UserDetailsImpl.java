@@ -1,6 +1,5 @@
 package com.hades.foxtube.security.service;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hades.foxtube.model.User;
 import java.util.ArrayList;
 import java.util.Collection;

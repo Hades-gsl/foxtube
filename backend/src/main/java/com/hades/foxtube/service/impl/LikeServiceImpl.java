@@ -24,12 +24,12 @@ public class LikeServiceImpl implements LikeService {
   }
 
   @Override
-  public void deleteLike(Like like) {
-    likeDao.deleteLike(like);
+  public void deleteLike(Long id) {
+    likeDao.deleteLike(id);
   }
 
   @Override
-  public Like getLike(int userId, int videoId) {
+  public Like getLike(Long userId, Long videoId) {
     return likeDao.getLike(userId, videoId);
   }
 }

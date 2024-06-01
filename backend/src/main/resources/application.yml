@@ -2,6 +2,11 @@ spring:
   application:
     name: foxtube
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/foxtube
@@ -12,6 +17,7 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.hades.foxtube.model
 
+
 jwt:
   secret: $8%^w^k^F4&Gk%m2R1EKS5CsMr!dLxDT6g&B6ox1^$S%y$@JmGeO31643@*$jP1J
   expiration-millisecond: 604800000
@@ -20,4 +26,4 @@ azure:
   blob:
     accountName: foxtube
     containerName: storage
-    sasToken: sp=racw&st=2024-05-31T06:36:24Z&se=2024-05-31T14:36:24Z&spr=https&sv=2022-11-02&sr=c&sig=MTZ%2BbFbJuzVQJtPd50F5OeKv5GYtbLNx8t8tVFRWkyc%3D
+    sasToken: sp=racw&st=2024-06-01T04:16:00Z&se=2024-07-01T12:16:00Z&spr=https&sv=2022-11-02&sr=c&sig=KZZOdUWZgbgBqEIne64Et69NnX3CVDfOMqHnENRYDmM%3D

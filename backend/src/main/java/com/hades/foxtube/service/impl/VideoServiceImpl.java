@@ -3,10 +3,9 @@ package com.hades.foxtube.service.impl;
 import com.hades.foxtube.dao.VideoDao;
 import com.hades.foxtube.model.Video;
 import com.hades.foxtube.service.VideoService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @Author: Hades @Date: 2024/5/29 @Description:
@@ -14,7 +13,7 @@ import java.util.List;
 @Service
 public class VideoServiceImpl implements VideoService {
   private VideoDao videoDao;
-  private final Integer LIMIT = 12;
+  private final Long LIMIT = 12L;
 
   @Autowired
   public VideoServiceImpl(VideoDao videoDao) {
@@ -22,7 +21,7 @@ public class VideoServiceImpl implements VideoService {
   }
 
   @Override
-  public List<Video> getVideos(Integer authorId, Integer offset) {
+  public List<Video> getVideos(Long authorId, Long offset) {
     return videoDao.getVideos(authorId, offset, LIMIT);
   }
 
@@ -32,12 +31,12 @@ public class VideoServiceImpl implements VideoService {
   }
 
   @Override
-  public Integer getVideoCount(Integer authorId) {
+  public Long getVideoCount(Long authorId) {
     return videoDao.getVideoCount(authorId);
   }
 
   @Override
-  public Video getVideo(Integer id) {
+  public Video getVideo(Long id) {
     return videoDao.getVideo(id);
   }
 }

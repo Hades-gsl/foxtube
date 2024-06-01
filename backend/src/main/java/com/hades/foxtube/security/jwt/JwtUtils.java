@@ -2,13 +2,11 @@ package com.hades.foxtube.security.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 /**
  * @Author: Hades @Date: 2024/5/29 @Description:
@@ -23,9 +21,7 @@ public class JwtUtils {
   @Value("${jwt.expiration-millisecond}")
   private Long expirationTime;
 
-  public String generateToken(Authentication authentication) {
-    String username = authentication.getName();
-
+  public String generateToken(String username) {
     return JWT.create()
         .withSubject(username)
         .withIssuedAt(new Date())

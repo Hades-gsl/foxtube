@@ -43,7 +43,7 @@ public class VideoController implements VideoApi {
       MultipartFile video,
       MultipartFile cover,
       String description,
-      Integer authorId) {
+      Long authorId) {
     try {
       String videoUrl = upload(video);
       String coverUrl = upload(cover);
@@ -59,18 +59,24 @@ public class VideoController implements VideoApi {
   }
 
   @Override
-  public ResponseEntity<VideoDto> getVideo(String id, String authorization) {
-    return ResponseEntity.ok(videoMapper.toVideoDto(videoService.getVideo(Integer.valueOf(id))));
+  public ResponseEntity<VideoDto> getVideo(Long id, String authorization) {
+    Video video = videoService.getVideo(id);
+
+    if (video == null) {
+      return ResponseEntity.notFound().build();
+    }
+
+    return ResponseEntity.ok(videoMapper.toVideoDto(video));
   }
 
   @Override
   public ResponseEntity<List<VideoDto>> getVideos(
-      Integer offset, Integer authorId, String authorization) {
-    return ResponseEntity.ok(videoMapper.toVideoDtoList(videoService.getVideos(offset, authorId)));
+      Long offset, Long authorId, String authorization) {
+    return ResponseEntity.ok(videoMapper.toVideoDtoList(videoService.getVideos(authorId, offset)));
   }
 
   @Override
-  public ResponseEntity<CountDto> getVideosCount(Integer authorId, String authorization) {
+  public ResponseEntity<CountDto> getVideosCount(Long authorId, String authorization) {
     return ResponseEntity.ok(new CountDto().count(videoService.getVideoCount(authorId)));
   }
 
