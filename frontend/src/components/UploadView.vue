@@ -6,7 +6,7 @@ import {getHttp} from "@/scripts/http.js";
 import {useRouter} from "vue-router";
 
 
-let video = reactive({
+const video = reactive({
   title: null,
   cover: null,
   src: null,
@@ -14,12 +14,14 @@ let video = reactive({
   author_id: store.user.id
 })
 
-let terms = ref(false)
-let loading = ref(false)
+const terms = ref(false)
+const loading = ref(false)
 
 const rules = {
   required: value => !!value || 'Required.',
 }
+
+const router = useRouter()
 
 async function submit() {
   if (!video.title || !video.cover || !video.src || !video.description) {
@@ -46,9 +48,9 @@ async function submit() {
 
   if (response.status === 201) {
     alert('Video uploaded successfully!')
-    await useRouter().push({name: 'home'})
+    await router.push({name: 'home'})
   } else {
-    console.log(response.status)
+    console.log(response)
     alert('Failed to upload video, please try again.')
   }
 }
@@ -80,7 +82,7 @@ async function submit() {
             :rules="[rules.required]"
             color="primary"
             label="Cover"
-            accept="image/*"
+            accept="image/jpg"
             show-size
             prepend-icon="mdi-image"
             @input="(event)=>{video.cover=event.target.files[0]}"
@@ -90,7 +92,7 @@ async function submit() {
             :rules="[rules.required]"
             color="primary"
             label="Video"
-            accept="video/*"
+            accept="video/mp4"
             show-size
             prepend-icon="mdi-video"
             @input="(event)=>{video.src=event.target.files[0]}"

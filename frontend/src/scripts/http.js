@@ -6,12 +6,12 @@ let http = null
 export function getHttp() {
     if (http === null) {
         http = axios.create({
-            baseURL: 'http://localhost:8000/foxtube',
+            baseURL: 'http://localhost:8080/',
         })
 
         http.interceptors.request.use(config => {
-            if (store.token.value !== null) {
-                config.headers.Authorization = `Bearer ${store.token.value}`
+            if (store.token !== null && store.token !== undefined) {
+                config.headers.Authorization = `Bearer ${store.token}`
             }
             return config
         })
@@ -20,8 +20,8 @@ export function getHttp() {
             response => response,
             error => {
                 if (error.response.status === 401) {
-                    store.token.value = null
-                    store.user.value = null
+                    store.token = null
+                    store.user = null
                 }
                 return Promise.reject(error)
             }

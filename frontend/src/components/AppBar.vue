@@ -1,5 +1,5 @@
 <script setup>
-import font from "@/assets/font.png";
+import icon from "@/assets/fix.png";
 import {store} from "@/scripts/store.js";
 
 function search() {
@@ -17,12 +17,14 @@ function logout() {
 <template>
   <v-app-bar :elevation="2">
     <template v-slot:prepend>
-      <img
-          :src="font"
-          alt="FoxTube"
-          class="ml-4"
-          style="max-height: 100%;"
-      >
+      <router-link to="/">
+        <img
+            :src="icon"
+            alt="FoxTube"
+            class="ml-4"
+            style="max-height: 100%;"
+        >
+      </router-link>
     </template>
     <template v-slot:append>
 

@@ -1,5 +1,6 @@
 <script setup>
-import {ref} from "vue";
+import {onMounted, onUpdated, ref} from "vue";
+import {getHttp} from "@/scripts/http.js";
 
 const props = defineProps({
   videos: {
@@ -13,11 +14,32 @@ const props = defineProps({
   get_videos: {
     type: Function,
     required: true
+  },
+  users: {
+    type: Array,
+    required: false
   }
 });
 
 const videos_per_page = 12;
-let page = ref(1)
+const page = ref(1)
+let users = ref([])
+
+function get_users() {
+  for (let i = 0; i < props.videos.length; i++) {
+    getHttp().get(`/user/${props.videos[i].author_id}`).then(res => {
+      if (res.status === 200) {
+        users.value.push(res.data)
+      } else {
+        users.value.push(null)
+      }
+    })
+  }
+}
+
+onUpdated(() => {
+  get_users()
+})
 
 </script>
 
@@ -25,7 +47,7 @@ let page = ref(1)
   <v-container fluid>
     <v-row>
       <v-col
-          v-for="video in videos"
+          v-for="(video, index) in videos"
           :key="video.id"
           cols="12"
           sm="6"
@@ -37,7 +59,7 @@ let page = ref(1)
               class="aspect-ratio"
           >
             <v-img
-                :src="video.thumbnail"
+                :src="video.cover"
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="75%"
@@ -46,9 +68,9 @@ let page = ref(1)
             </v-img>
 
             <v-card-actions class="h-25">
-              <v-card-title v-text="video.title"></v-card-title>
+              <v-card-title>{{ video.title }}</v-card-title>
               <v-spacer></v-spacer>
-              <v-card-text class="text--primary">{{ video.author }}</v-card-text>
+              <v-card-text v-if="users[index]!=null" class="text--primary">{{ users[index].username }}</v-card-text>
             </v-card-actions>
           </v-card>
         </router-link>
@@ -59,7 +81,7 @@ let page = ref(1)
       <v-col cols="12" sm="8">
         <v-pagination
             v-model="page"
-            :length="(videos.length + videos_per_page - 1) / videos_per_page"
+            :length="Math.ceil(videos.length / videos_per_page)"
             rounded="circle"
             next-icon="mdi-menu-right"
             prev-icon="mdi-menu-left"

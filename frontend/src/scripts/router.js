@@ -20,7 +20,7 @@ export const router = createRouter({
             component: UploadView,
             name: 'upload',
             beforeEnter: (to, from) => {
-                if (store.token.value == null || store.user.value == null) {
+                if (store.token == null || store.user == null) {
                     return {name: 'login'};
                 }
             }
@@ -31,7 +31,7 @@ export const router = createRouter({
             name: 'user',
             props: true,
             beforeEnter: (to, from) => {
-                if (store.token.value == null || store.user.value == null) {
+                if (store.token == null || store.user == null) {
                     return {name: 'login'};
                 }
             }
@@ -41,18 +41,18 @@ export const router = createRouter({
 })
 
 router.beforeEach((to, from) => {
-    if (store.token.value === null) {
-        const cookies = document.cookie.split(';').reduce((cookies, cookie) => {
-            const [name, value] = cookie.split('=').map(c => c.trim());
+    if (store.token === null) {
+        let cookies = {}
+        document.cookie.split(';').forEach(cookie => {
+            let [name, value] = cookie.split('=').map(c => c.trim());
             cookies[name] = value;
-            return cookies;
         })
-        store.token.value = cookies.token;
+        store.token = cookies.token;
     }
 
-    if (store.token.value !== undefined && store.user.value === null) {
+    if (store.token !== undefined && store.user === null) {
         getHttp().get('/user').then(response => {
-            store.user.value = response.data;
+            store.user = response.data;
         }).catch(error => {
             console.log(error);
         })

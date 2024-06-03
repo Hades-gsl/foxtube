@@ -6,11 +6,13 @@ import {getHttp} from "@/scripts/http.js";
 import {useRouter} from "vue-router";
 import {store} from "@/scripts/store.js";
 
-let visible = ref(false)
-let loading = ref(false)
+const visible = ref(false)
+const loading = ref(false)
 
-let email = ref(null)
-let password = ref(null)
+const email = ref(null)
+const password = ref(null)
+
+const router = useRouter()
 
 async function submit() {
   if (!email.value || !password.value) {
@@ -26,10 +28,15 @@ async function submit() {
 
   loading.value = false
 
-  if (response.status === 201) {
+  if (response.status === 200) {
     alert('User logged in successfully!')
-    store.user = response.data
-    await useRouter().push({name: 'home'})
+    store.user = {...store.user, ...response.data}
+    delete store.user.token
+
+    store.token = response.data.token
+    document.cookie = `token=${response.data.token}; path=/;`
+
+    await router.replace('/home')
   } else {
     console.log(response.status)
     alert('Failed to login user, please try again.')

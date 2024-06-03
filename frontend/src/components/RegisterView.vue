@@ -5,20 +5,22 @@ import fix from "@/assets/fix.png";
 import {useRouter} from "vue-router";
 import {getHttp} from "@/scripts/http.js";
 
-let username = ref(null)
-let email = ref(null)
-let password = ref(null)
-let profile = ref(null)
-let terms = ref(false)
+const username = ref(null)
+const email = ref(null)
+const password = ref(null)
+const profile = ref(null)
+const terms = ref(false)
 
-let show = ref(false)
+const show = ref(false)
 const rules = {
   required: value => !!value || 'Required.',
   min: v => v.length >= 8 || 'Min 8 characters',
 }
 
-let text = ref('')
-let loading = ref(false)
+const text = ref('')
+const loading = ref(false)
+
+const router = useRouter()
 
 async function submit() {
   if (!username.value) {
@@ -48,7 +50,7 @@ async function submit() {
 
   if (response.status === 201) {
     alert('User registered successfully!')
-    await useRouter().push({name: 'login'})
+    await router.push({name: 'login'})
   } else {
     console.log(response.status)
     alert('Failed to register user, please try again.')

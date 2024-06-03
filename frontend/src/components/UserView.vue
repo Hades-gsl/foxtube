@@ -1,7 +1,7 @@
 <script setup>
 import AppBar from "@/components/AppBar.vue";
 import VideoGrid from "@/components/VideoGrid.vue";
-import {reactive} from "vue";
+import {onMounted, ref} from "vue";
 import {getHttp} from "@/scripts/http.js";
 import {store} from "@/scripts/store.js";
 // https://randomuser.me/api/
@@ -14,25 +14,28 @@ const props = defineProps({
 })
 
 
-function get_videos(page) {
-  let res = null
-  getHttp().get(`/videos`,
+async function get_videos(page) {
+  let res = await getHttp().get(`/video`,
       {
         params: {
           offset: (page - 1) * store.videos_per_count,
           author_id: props.id
         }
       }
-  ).then(response => {
-    res = response
-  }).catch(error => {
-    console.error(error)
-  })
+  )
+
+  if (res.status !== 200) {
+    return []
+  }
 
   return res.data
 }
 
-let videos = reactive(get_videos(1))
+const videos = ref([])
+
+onMounted(async () => {
+  videos.value = await get_videos(1)
+})
 
 </script>
 
@@ -50,7 +53,7 @@ let videos = reactive(get_videos(1))
             <v-layout row class="align-center">
               <v-avatar :image="store.user.avatar" size="x-large" class="mt-2 ml-2"></v-avatar>
               <div class="mb-0 pb-0">
-                <v-card-title>{{ store.user.store.username }}</v-card-title>
+                <v-card-title>{{ store.user.username }}</v-card-title>
                 <v-card-subtitle>{{ store.user.email }}</v-card-subtitle>
                 <v-divider></v-divider>
               </div>

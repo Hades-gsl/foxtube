@@ -3,34 +3,42 @@
 import AppBar from "@/components/AppBar.vue";
 import VideoGrid from "@/components/VideoGrid.vue";
 import Banner from "@/components/Banner.vue";
-import {reactive, ref} from "vue";
+import {onMounted, ref} from "vue";
 import {getHttp} from "@/scripts/http.js";
 import {store} from "@/scripts/store.js";
 
-let video_count = ref(0)
+async function get_video_count() {
+  let res = await getHttp().get('/video/count')
 
-getHttp().get('/videos/count').then(response => {
-  video_count.value = response.data.count
-}).catch(error => {
-  console.error(error)
-})
+  if (res.status === 200) {
+    return res.data.count
+  }
 
-function get_videos(page) {
-  let res = null
-  getHttp().get('/videos', {
+  return 0;
+}
+
+const video_count = ref(0)
+
+async function get_videos(page) {
+  let res = await getHttp().get('/video', {
     params: {
       offset: (page - 1) * store.videos_per_count
     }
-  }).then(response => {
-    res = response
-  }).catch(error => {
-    console.log(error)
   })
 
-  return res.data
+  if (res.status === 200) {
+    return res.data
+  }
+
+  return [];
 }
 
-let videos = reactive(get_videos(1))
+const videos = ref([])
+
+onMounted(async () => {
+  video_count.value = await get_video_count()
+  videos.value = await get_videos(1)
+})
 
 </script>
 
