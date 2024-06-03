@@ -45,8 +45,8 @@ public class VideoController implements VideoApi {
       String description,
       Long authorId) {
     try {
-      String videoUrl = upload(video);
-      String coverUrl = upload(cover);
+      String videoUrl = upload(video, ".mp4");
+      String coverUrl = upload(cover, ".jpg");
       Video video1 = Video.create(title, coverUrl, videoUrl, description, authorId);
       videoService.insertVideo(video1);
 
@@ -80,9 +80,9 @@ public class VideoController implements VideoApi {
     return ResponseEntity.ok(new CountDto().count(videoService.getVideoCount(authorId)));
   }
 
-  public String upload(MultipartFile file) throws IOException {
+  public String upload(MultipartFile file, String suffix) throws IOException {
     String blobName = UUID.randomUUID().toString();
-    BlobClient blobClient = blobContainerClient.getBlobClient(blobName);
+    BlobClient blobClient = blobContainerClient.getBlobClient(blobName + suffix);
 
     ByteArrayInputStream dataStream = new ByteArrayInputStream(file.getBytes());
     blobClient.upload(dataStream, file.getSize());
