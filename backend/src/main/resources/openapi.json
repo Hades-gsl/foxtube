@@ -150,7 +150,7 @@
         "x-apifox-status": "released",
         "deprecated": false,
         "description": "",
-        "operationId": "getUser",
+        "operationId": "getUserByToken",
         "tags": [
           "user"
         ],
@@ -451,17 +451,17 @@
                   "video_id": {
                     "type": "integer"
                   },
-                  "author_id": {
+                  "user_id": {
                     "type": "integer"
                   }
                 },
                 "x-apifox-orders": [
                   "video_id",
-                  "author_id"
+                  "user_id"
                 ],
                 "required": [
                   "video_id",
-                  "author_id"
+                  "user_id"
                 ],
                 "x-apifox-ignore-properties": []
               }
@@ -507,7 +507,7 @@
             }
           },
           {
-            "name": "author_id",
+            "name": "user_id",
             "in": "query",
             "description": "",
             "required": true,
@@ -830,6 +830,68 @@
           }
         },
         "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-176175593-run",
+        "security": []
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "summary": "获取用户",
+        "x-apifox-folder": "user",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getUserById",
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user",
+                  "x-apifox-overrides": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "记录不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/4182322/apis/api-180594691-run",
         "security": []
       }
     }

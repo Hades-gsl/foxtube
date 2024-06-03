@@ -33,7 +33,18 @@ public class UserController implements UserApi {
   }
 
   @Override
-  public ResponseEntity<UserDto> getUser(String authorization) {
+  public ResponseEntity<UserDto> getUserById(Long id, String authorization) {
+    User user = userService.getUser(id);
+
+    if (user == null) {
+      return ResponseEntity.notFound().build();
+    }
+
+    return ResponseEntity.ok(userMapper.toUserDto(user));
+  }
+
+  @Override
+  public ResponseEntity<UserDto> getUserByToken(String authorization) {
     return ResponseEntity.ok(
         userMapper.toUserDto(
             ((UserDetailsImpl)

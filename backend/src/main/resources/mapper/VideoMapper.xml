@@ -16,7 +16,7 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <insert id="insertVideo" parameterType="Video" keyProperty="id">
+    <insert id="insertVideo" parameterType="Video" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO videos (title, cover, url, description, author_id, published_at)
         VALUES (#{title}, #{cover}, #{url}, #{description}, #{authorId}, #{publishedAt})
     </insert>

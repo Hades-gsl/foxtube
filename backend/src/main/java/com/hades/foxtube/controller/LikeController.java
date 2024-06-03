@@ -26,8 +26,8 @@ public class LikeController implements LikeApi {
   }
 
   @Override
-  public ResponseEntity<LikeDto> getLike(Long videoId, Long authorId, String authorization) {
-    Like like = likeService.getLike(videoId, authorId);
+  public ResponseEntity<LikeDto> getLike(Long videoId, Long userId, String authorization) {
+    Like like = likeService.getLike(userId, videoId);
 
     if (like == null) {
       return ResponseEntity.notFound().build();

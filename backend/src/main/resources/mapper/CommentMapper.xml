@@ -7,7 +7,7 @@
         <result property="createdAt" column="created_at"/>
     </resultMap>
 
-    <insert id="insertComment" parameterType="Comment" keyProperty="id">
+    <insert id="insertComment" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO comments (video_id, author_id, content, created_at)
         VALUES (#{videoId}, #{authorId}, #{content}, #{createdAt})
     </insert>

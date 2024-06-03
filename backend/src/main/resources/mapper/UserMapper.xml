@@ -23,7 +23,7 @@
         WHERE email = #{email}
     </select>
 
-    <insert id="insertUser" parameterType="User" keyProperty="id">
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO users (password, username, email, avatar, profile, video_count)
         VALUES (#{password}, #{username}, #{email}, #{avatar}, #{profile}, #{videoCount})
     </insert>

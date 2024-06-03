@@ -6,7 +6,7 @@
         <result property="userId" column="user_id"/>
     </resultMap>
 
-    <insert id="insertLike" parameterType="Like" keyProperty="id">
+    <insert id="insertLike" parameterType="Like" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO likes (video_id, user_id)
         VALUES (#{videoId}, #{userId})
     </insert>
