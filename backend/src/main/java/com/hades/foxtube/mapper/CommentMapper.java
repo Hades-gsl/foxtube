@@ -1,5 +1,6 @@
 package com.hades.foxtube.mapper;
 
+import com.hades.foxtube.dto.AddCommentRequestDto;
 import com.hades.foxtube.dto.CommentDto;
 import com.hades.foxtube.model.Comment;
 import java.util.List;
@@ -17,4 +18,6 @@ public interface CommentMapper {
   List<CommentDto> toCommentDtoList(List<Comment> comments);
 
   List<Comment> toCommentList(List<CommentDto> commentDtos);
+
+  Comment toComment(AddCommentRequestDto addCommentRequestDto);
 }

@@ -45,7 +45,7 @@ public class User {
         .build();
   }
 
-  private static String _getAvatar() {
+  public static String _getAvatar() {
     // response example:
     //    {
     //            "code": 200,

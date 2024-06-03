@@ -1,5 +1,6 @@
 package com.hades.foxtube.mapper;
 
+import com.hades.foxtube.dto.RegisterRequestDto;
 import com.hades.foxtube.dto.UserDto;
 import com.hades.foxtube.model.User;
 import java.util.List;
@@ -17,4 +18,6 @@ public interface UserMapper {
   List<UserDto> toUserDtoList(List<User> users);
 
   List<User> toUserList(List<UserDto> userDtos);
+
+  User toUser(RegisterRequestDto registerRequestDto);
 }

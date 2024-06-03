@@ -1,7 +1,9 @@
 package com.hades.foxtube.controller;
 
 import com.hades.foxtube.api.UserApi;
+import com.hades.foxtube.dto.LoginRequestDto;
 import com.hades.foxtube.dto.LoginResponseDto;
+import com.hades.foxtube.dto.RegisterRequestDto;
 import com.hades.foxtube.dto.UserDto;
 import com.hades.foxtube.mapper.UserMapper;
 import com.hades.foxtube.model.User;
@@ -41,8 +43,8 @@ public class UserController implements UserApi {
 
   @Override
   public ResponseEntity<LoginResponseDto> login(
-      String email, String password, String authorization) {
-    User user = userService.login(email, password);
+      String authorization, LoginRequestDto loginRequestDto) {
+    User user = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
 
     if (user == null) {
       return ResponseEntity.badRequest().build();
@@ -64,9 +66,9 @@ public class UserController implements UserApi {
 
   @Override
   public ResponseEntity<Object> register(
-      String username, String email, String password, String authorization, String profile) {
-
-    User user = User.create(username, email, password, profile);
+      String authorization, RegisterRequestDto registerRequestDto) {
+    User user = userMapper.toUser(registerRequestDto);
+    user.setAvatar(User._getAvatar());
 
     userService.insertUser(user);
 

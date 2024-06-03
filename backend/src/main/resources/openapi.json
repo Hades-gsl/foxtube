@@ -93,7 +93,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/x-www-form-urlencoded": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -110,11 +110,18 @@
                     "type": "string"
                   }
                 },
+                "x-apifox-orders": [
+                  "username",
+                  "email",
+                  "password",
+                  "profile"
+                ],
                 "required": [
                   "username",
                   "email",
                   "password"
-                ]
+                ],
+                "x-apifox-ignore-properties": []
               }
             }
           }
@@ -214,7 +221,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/x-www-form-urlencoded": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -225,10 +232,15 @@
                     "type": "string"
                   }
                 },
+                "x-apifox-orders": [
+                  "email",
+                  "password"
+                ],
                 "required": [
                   "email",
                   "password"
-                ]
+                ],
+                "x-apifox-ignore-properties": []
               }
             }
           }
@@ -432,7 +444,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/x-www-form-urlencoded": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -443,10 +455,15 @@
                     "type": "integer"
                   }
                 },
+                "x-apifox-orders": [
+                  "video_id",
+                  "author_id"
+                ],
                 "required": [
                   "video_id",
                   "author_id"
-                ]
+                ],
+                "x-apifox-ignore-properties": []
               }
             }
           }
@@ -669,7 +686,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/x-www-form-urlencoded": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -683,11 +700,17 @@
                     "type": "integer"
                   }
                 },
+                "x-apifox-orders": [
+                  "content",
+                  "video_id",
+                  "author_id"
+                ],
                 "required": [
                   "content",
                   "video_id",
                   "author_id"
-                ]
+                ],
+                "x-apifox-ignore-properties": []
               }
             }
           }
@@ -763,7 +786,7 @@
       "delete": {
         "summary": "取消点赞",
         "x-apifox-folder": "like",
-        "x-apifox-status": "testing",
+        "x-apifox-status": "released",
         "deprecated": false,
         "description": "",
         "operationId": "deleteLike",

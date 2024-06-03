@@ -1,6 +1,7 @@
 package com.hades.foxtube.controller;
 
 import com.hades.foxtube.api.LikeApi;
+import com.hades.foxtube.dto.AddLikeRequestDto;
 import com.hades.foxtube.dto.LikeDto;
 import com.hades.foxtube.mapper.LikeMapper;
 import com.hades.foxtube.model.Like;
@@ -42,8 +43,8 @@ public class LikeController implements LikeApi {
   }
 
   @Override
-  public ResponseEntity<Object> addLike(String authorization, Long videoId, Long authorId) {
-    Like like = Like.create(videoId, authorId);
+  public ResponseEntity<Object> addLike(String authorization, AddLikeRequestDto addLikeRequestDto) {
+    Like like = likeMapper.toLike(addLikeRequestDto);
     likeService.insertLike(like);
     return ResponseEntity.created(URI.create("/like/" + like.getId())).build();
   }

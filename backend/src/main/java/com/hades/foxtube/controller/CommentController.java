@@ -1,12 +1,14 @@
 package com.hades.foxtube.controller;
 
 import com.hades.foxtube.api.CommentApi;
+import com.hades.foxtube.dto.AddCommentRequestDto;
 import com.hades.foxtube.dto.CommentDto;
 import com.hades.foxtube.dto.CountDto;
 import com.hades.foxtube.mapper.CommentMapper;
 import com.hades.foxtube.model.Comment;
 import com.hades.foxtube.service.CommentService;
 import java.net.URI;
+import java.time.Instant;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +30,9 @@ public class CommentController implements CommentApi {
 
   @Override
   public ResponseEntity<Object> addComment(
-      String authorization, String content, Long videoId, Long authorId) {
-    Comment comment = Comment.create(content, videoId, authorId);
+      String authorization, AddCommentRequestDto addCommentRequestDto) {
+    Comment comment = commentMapper.toComment(addCommentRequestDto);
+    comment.setCreatedAt(Instant.now().toEpochMilli());
     commentService.insertComment(comment);
     return ResponseEntity.created(URI.create("/comment/" + comment.getId())).build();
   }
