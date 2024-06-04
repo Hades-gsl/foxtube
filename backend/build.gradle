@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'com.hades'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 
 def genSrc = "$rootDir/build/generated"
 def resourcesSrc = "$rootDir/src/main/resources"
