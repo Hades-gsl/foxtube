@@ -82,3 +82,10 @@ sourceSets.main.java.srcDirs += "$genSrc/src/main/java"
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
+
+tasks.named("bootBuildImage") {
+    environment = [
+            "BPE_DELIM_JAVA_TOOL_OPTIONS" : " ",
+            "BPE_APPEND_JAVA_TOOL_OPTIONS" : "-XX:MaxDirectMemorySize=64m"
+    ]
+}
